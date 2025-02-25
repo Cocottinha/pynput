@@ -8,6 +8,8 @@ keyboard = KeyboardController()
 # Define button locations
 button1_location = (116, 1056)  # First button coordinates
 button2_location = (364, 347)  # Second button coordinates
+button3_location = (364, 347)  # third button coordinates
+button4_location = (364, 347)  # fourth button coordinates
 counter = 1  # Start counter
 
 def click_button(location):
@@ -23,11 +25,13 @@ def update_counter():
 # Repeat the process 180 times
 for i in range(180):
     print(f"Iteration {i+1}/180")
-    click_button(button1_location)  # Click first button
+    click_button(button1_location)  # Click to acquire image
     time.sleep(10)  # Wait 10 seconds
-    click_button(button2_location)  # Click second button
+    click_button(button2_location)  # Click to save image 
+    click_button(button3_location)  # Click to write the filename
     update_counter()  # Type counter value
     counter += 1  # Increment counter
+    click_button(button4_location)  # Click to save
     time.sleep(1)  # Short delay before the next iteration
 
 print("Process completed!")
