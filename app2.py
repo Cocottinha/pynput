@@ -1,31 +1,21 @@
 from pynput import mouse
-def on_move(x, y):
-    print('Pointer moved to {0}'.format(
-        (x, y)))
+
+locations = []  # Store the four locations
 
 def on_click(x, y, button, pressed):
-    print('{0} at {1}'.format(
-        'Pressed' if pressed else 'Released',
-        (x, y)))
-    if not pressed:
-        # Stop listener
-        return False
+    """Captures four (x, y) positions on mouse clicks."""
+    if pressed:
+        locations.append((x, y))
+        print(f"Captured location {len(locations)}: {x}, {y}")
 
-def on_scroll(x, y, dx, dy):
-    print('Scrolled {0} at {1}'.format(
-        'down' if dy < 0 else 'up',
-        (x, y)))
+        if len(locations) == 4:
+            print("All four locations captured:", locations)
+            return False  # Stop listener after four clicks
 
-# Collect events until released
-with mouse.Listener(
-        on_move=on_move,
-        on_click=on_click,
-        on_scroll=on_scroll) as listener:
+# Start the mouse listener
+with mouse.Listener(on_click=on_click) as listener:
+    print("Click four times to capture the locations...")
     listener.join()
 
-# ...or, in a non-blocking fashion:
-listener = mouse.Listener(
-    on_move=on_move,
-    on_click=on_click,
-    on_scroll=on_scroll)
-listener.start()
+# Print final locations
+print("Final captured locations:", locations)
