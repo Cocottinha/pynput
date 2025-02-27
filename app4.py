@@ -15,7 +15,8 @@ def send_gcode(command):
 
 try:
     send_gcode("G90")   # Modo absoluto
-    send_gcode("G1 X100 F100")  # Move o motor para X=10
+    send_gcode("G1 X1 F100")  # Move o motor para X=10
+    time.sleep(0.5)
 except KeyboardInterrupt:
     print("Movimentação interrompida")
 finally:
