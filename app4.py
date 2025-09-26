@@ -17,7 +17,7 @@ button1_location = (65, 412)  # First button coordinates
 button2_location = (69, 500)  # Second button coordinates
 button3_location = (246, 359)  # Third button coordinates
 button4_location = (614, 473)  # Fourth button coordinates
-counter = 1  # Start counter
+counter = 0  # Start counter
 
 def click_button(location):
     """Moves the mouse to the given location and clicks."""
@@ -44,8 +44,8 @@ def send_gcode(command):
 # Repeat the process 180 times
 send_gcode("G91")  # Set to relative positioning mode
 
-for i in range(180):  # Loop 180 times
-    print(f"Iteration {i+1}/180")
+for i in range(360):  # Loop 180 times
+    print(f"Iteration {i}/180")
     
     click_button(button1_location)  # Click to acquire image
     time.sleep(12)  # Foi utilizado 15s nos testes, mas 12 aparenta ser o necessário
