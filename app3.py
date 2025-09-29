@@ -5,7 +5,7 @@ for port in ports:
     print(port.device)  # Exibe todas as portas COM disponíveis
 
 try:
-    ser = serial.Serial('COM4', 115200, timeout=1)  # Altere para a porta correta
+    ser = serial.Serial('COM12', 115200, timeout=1)  # Altere para a porta correta
     print("Conectado com sucesso!")
     ser.close()
 except serial.SerialException as e:
