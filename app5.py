@@ -18,7 +18,7 @@ import pyautogui
 mouse = MouseController()
 keyboard = KeyboardController()
 
-ser = serial.Serial('COM12', 115200, timeout=1)
+ser = serial.Serial('COM3', 115200, timeout=1)
 
 button1_location = (65, 412)  
 button2_location = (69, 500)  
@@ -37,14 +37,14 @@ def update_counter():
     """Types the current counter value."""
     keyboard.type(str(counter))
 
-def verificar_pixel_verde():
+def verificar_pixel_verde(x, y):
     """Check if the board is already ready to run another measure"""
     # Captura a cor do pixel na posição (x, y)
     pixel = pyautogui.pixel(x, y)
 
     # Cor verde "puro" seria (0, 255, 0), mas podemos aceitar um intervalo
     r, g, b = pixel
-    if g > 200 and r < 50 and b < 50:
+    if g == 128 and r == 0 and b == 0:
         return True
     return False
 
@@ -73,7 +73,8 @@ for i in range(360):  # Loop 180 times
     print(f"Iteration {i}/360")
     
     click_button(button1_location)  # Click to acquire image
-    monitorar_pixel(100, 200) #preciso descobrir o pixel ainda
+    monitorar_pixel(271, 1002) #preciso descobrir o pixel ainda
+    time.sleep(1)
     #time.sleep(12)  # Foi utilizado 15s nos testes, mas 12 aparenta ser o necessário
     click_button(button2_location)  # Click to save image
     time.sleep(0.5)
