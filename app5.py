@@ -39,22 +39,24 @@ def update_counter():
 
 def verificar_pixel_verde(x, y):
     """Check if the board is already ready to run another measure"""
-    # Captura a cor do pixel na posição (x, y)
     pixel = pyautogui.pixel(x, y)
 
-    # Cor verde "puro" seria (0, 255, 0), mas podemos aceitar um intervalo
     r, g, b = pixel
     if g == 128 and r == 0 and b == 0:
         return True
     return False
 
-def monitorar_pixel(x, y):
+def esperar_pixel_verde(x, y):
+    """Espera até que o pixel em (x,y) fique verde"""
     while True:
-        if verificar_pixel_verde(x, y):
-            print(f"Pixel em ({x}, {y}) está verde!")
+        r, g, b = pyautogui.pixel(x, y)
+        if g == 128 and r == 0 and b == 0:  # Verde dentro de um intervalo
+            print(f"Pixel em ({x}, {y}) ficou VERDE! Continuando...")
+            return True
         else:
-            print(f"Pixel em ({x}, {y}) NÃO está verde.")
-        time.sleep(1)  # espera 1 segundo
+            print(f"Pixel em ({x}, {y}) ainda não está verde ({r}, {g}, {b})...")
+            time.sleep(1)  # espera 1 segundo antes de checar de novo
+
 
 def send_gcode(command):
     """ Sends a G-code command and prints the response """
@@ -73,8 +75,8 @@ for i in range(360):  # Loop 180 times
     print(f"Iteration {i}/360")
     
     click_button(button1_location)  # Click to acquire image
-    monitorar_pixel(271, 1002) #preciso descobrir o pixel ainda
     time.sleep(1)
+    esperar_pixel_verde(271, 1002) #preciso descobrir o pixel ainda
     #time.sleep(12)  # Foi utilizado 15s nos testes, mas 12 aparenta ser o necessário
     click_button(button2_location)  # Click to save image
     time.sleep(0.5)
